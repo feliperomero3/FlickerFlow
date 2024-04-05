@@ -5,6 +5,7 @@
   "author": "Felipe Romero",
   "license": "MIT",
   "homepage": "https://github.com/feliperomero3/FlickerFlow/blob/master/README.md",
+  "type": "commonjs",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
