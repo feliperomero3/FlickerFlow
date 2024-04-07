@@ -24,7 +24,13 @@ app.get('/video', async (req, res) => {
 })
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  const content = `
+    <h1>Hello World!</h1>
+    <p>Welcome to FlickerFlow! Go to <a href="/video">Video</a></p>
+  `
+  res.writeHead(200, {
+    'Content-Type': 'text/html'
+  }).end(content)
 })
 
 app.listen(port, host, () => {
