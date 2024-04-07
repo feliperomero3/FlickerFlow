@@ -13,7 +13,7 @@ The users can view a list of videos. From there, they can select a video, and it
 
 ## Getting started
 
-1. Clone the project.
+1. Clone the repository.
 1. Open a terminal in the root directory.
 1. Change to the `src` directory.
 1. Run `npm install`.
