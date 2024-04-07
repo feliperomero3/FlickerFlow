@@ -27,6 +27,6 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.listen(port, () => {
+app.listen(port, host, () => {
   console.log(`FlickerFlow listening at http://${host}:${port}`)
 })
