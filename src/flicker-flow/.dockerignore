@@ -1,0 +1,7 @@
+.git
+.github
+.azdevops
+.azure
+.azure-pipelines
+node_modules
+test
