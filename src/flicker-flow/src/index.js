@@ -5,9 +5,6 @@ const host = process.env.HOST || 'localhost'
 const port = process.env.PORT || 3000
 
 const app = express()
-app.set('appname', 'FlickerFlow')
-app.set('port', port)
-app.set('host', host)
 
 app.get('/video', async (req, res) => {
   const path = 'src/assets/sample.mp4'
