@@ -10,14 +10,25 @@ The users can view a list of videos. From there, they can select a video, and it
 ## Prerequisites
 
 - Node.js 20
+- Docker Desktop 4.28
 
 ## Getting started
 
 1. Clone the repository.
 1. Open a terminal in the root directory.
-1. Change to the `src` directory.
+1. Change to the `src/flicker-flow` directory.
 1. Run `npm install`.
 1. Run `npm start`.
+1. Open your web browser at the specified URL.
+
+## Getting started using Docker
+
+1. Clone the repository.
+1. Open a terminal in the root directory.
+1. Change to the `src/flicker-flow` directory.
+1. Run `chmod +x docker-build.sh docker-run.sh`.
+1. Run `./docker-build.sh`.
+1. Run `./docker-run.sh`.
 1. Open your web browser at the specified URL.
 
 ## License
