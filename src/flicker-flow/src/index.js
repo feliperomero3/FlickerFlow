@@ -1,8 +1,14 @@
 const express = require('express')
 const fs = require('fs')
+const debug = require('debug')('flicker-flow:server')
+const appname = 'FlickerFlow'
 
+const environment = process.env.NODE_ENV || 'development'
 const host = process.env.HOST || 'localhost'
 const port = process.env.PORT || 3000
+
+debug('Environment is %o', environment)
+debug('booting %o...', appname)
 
 const app = express()
 
@@ -31,5 +37,8 @@ app.get('/', (req, res) => {
 })
 
 app.listen(port, host, () => {
-  console.log(`FlickerFlow listening at http://${host}:${port}`)
+  debug(`FlickerFlow listening at http://${host}:${port}`)
+  if (!debug.enabled) {
+    console.log(`FlickerFlow listening at http://${host}:${port}`)
+  }
 })
