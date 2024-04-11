@@ -30,14 +30,11 @@ const app = express()
 
 app.get('/video', async (req, res) => {
   if (!req.query.path && typeof req.query.path !== 'string') {
-    res.writeHead(400, {
-      'Content-Type': 'text/plain'
-    }).end('Missing "path" query parameter')
-    return
+    throw new Error('Missing "path" query parameter')
   }
-  const path = req.query.path.toString()
-  debug('Requesting video %o', path)
+  debug('Requesting video %o', req.query.path.toString())
 
+  const path = req.query.path.toString()
   const blobService = createBlobService()
   const containerClient = blobService.getContainerClient(storageContainerName)
   const blobClient = containerClient.getBlobClient(path)
@@ -46,10 +43,7 @@ app.get('/video', async (req, res) => {
   const properties = await blobClient.getProperties()
 
   if (!blob.readableStreamBody) {
-    res.writeHead(400, {
-      'Content-Type': 'text/plain'
-    }).end('"readableStreamBody" is undefined')
-    return
+    throw new Error('"readableStreamBody" is undefined')
   }
 
   res.writeHead(200, {
