@@ -3,11 +3,10 @@
     "module": "CommonJS",
     "moduleResolution": "Node",
     "target": "ES2022",
-    "strictNullChecks": true,
-    "strictFunctionTypes": true
+    "strict": true,
+    "checkJs": true
   },
   "exclude": [
-    "node_modules",
-    "**/node_modules/*"
+    "node_modules"
   ]
 }
