@@ -1,10 +1,13 @@
 const express = require('express')
-const fs = require('fs')
+const http = require('http')
 const debug = require('debug')('flicker-flow:server')
 const appname = 'FlickerFlow'
 
 const environment = process.env.NODE_ENV || 'development'
 const port = process.env.PORT || 3000
+const videoStorageHost = process.env.VIDEO_STORAGE_HOST || 'http://localhost'
+const videoStoragePortEnv = process.env.VIDEO_STORAGE_PORT || 3001
+const videoStoragePort = parseInt(videoStoragePortEnv.toString())
 
 debug('Environment is %o', environment)
 debug('booting %o...', appname)
@@ -12,23 +15,24 @@ debug('booting %o...', appname)
 const app = express()
 
 app.get('/video', async (req, res) => {
-  const path = 'src/assets/sample.mp4'
-
-  // Note that we're using "fs.promises" instead of "fs" to
-  // gain access to filesystem functions that are compatible
-  // with JavaScript's async/await keywords.
-  const stats = await fs.promises.stat(path)
-  res.writeHead(200, {
-    'Content-Length': stats.size,
-    'Content-Type': 'video/mp4'
+  const forwardOptions = {
+    method: 'GET',
+    path: '/video?path=sample.mp4',
+    headers: req.headers,
+    host: videoStorageHost,
+    port: videoStoragePort
+  }
+  const forwardRequest = http.request(forwardOptions, forwardResponse => {
+    res.writeHead(forwardResponse.statusCode || 200, forwardResponse.headers)
+    forwardResponse.pipe(res)
   })
-  fs.createReadStream(path).pipe(res)
+  req.pipe(forwardRequest)
 })
 
 app.get('/', (req, res) => {
   const content = `
     <h1>Hello World!</h1>
-    <p>Welcome to FlickerFlow! Go to <a href="/video">Video</a></p>
+    <p>Welcome to ${appname}! Go to <a href="/video">Video</a></p>
   `
   res.writeHead(200, {
     'Content-Type': 'text/html'
@@ -36,7 +40,7 @@ app.get('/', (req, res) => {
 })
 
 app.listen(port, () => {
-  const message = `FlickerFlow listening at http://localhost:${port}`
+  const message = `${appname} listening at http://localhost:${port}`
   debug(message)
   if (!debug.enabled) {
     console.log(message)
