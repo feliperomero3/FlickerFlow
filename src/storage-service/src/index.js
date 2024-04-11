@@ -6,7 +6,7 @@ const appname = 'StorageService'
 const environment = process.env.NODE_ENV || 'development'
 const port = process.env.PORT || 3001
 const storageContainerName = process.env.STORAGE_CONTAINER_NAME || 'videos'
-const storageEndpoint = process.env.STORAGE_ENDPOINT || 'http://0.0.0.0:10000/devstoreaccount1'
+const storageEndpoint = process.env.STORAGE_ENDPOINT || 'http://localhost:10000/devstoreaccount1'
 const storageAccountName = process.env.STORAGE_ACCOUNT_NAME || 'devstoreaccount1'
 const storageAccessKey = process.env.STORAGE_ACCESS_KEY || 'Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw=='
 
@@ -29,16 +29,21 @@ function createBlobService() {
 const app = express()
 
 app.get('/video', async (req, res) => {
-  if (!req.query.path && typeof req.query.path !== 'string') {
-    throw new Error('Missing "path" query parameter')
+  if (!req.query.path) {
+    throw new Error('Missing "path" query string key')
   }
-  debug('Requesting video %o', req.query.path.toString())
+  debug('Requesting video %o', req.query.path)
 
   const path = req.query.path.toString()
   const blobService = createBlobService()
   const containerClient = blobService.getContainerClient(storageContainerName)
   const blobClient = containerClient.getBlobClient(path)
 
+  const exists = await blobClient.exists()
+  if (!exists) {
+    res.status(404).send('Blob not found')
+    return
+  }
   const blob = await blobClient.download()
   const properties = await blobClient.getProperties()
 

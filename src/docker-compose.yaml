@@ -1,7 +1,7 @@
 version: '3'
 services:
   flickerflow:
-    image: feliperomero/flickerflow
+    image: feliperomero/flickerflow:latest
     build:
       context: ./flicker-flow
       dockerfile: Dockerfile
@@ -12,4 +12,23 @@ services:
       - PORT=4000
       - NODE_ENV=development
       - DEBUG=flicker-flow:*
+      - VIDEO_STORAGE_HOST=storageservice
+      - VIDEO_STORAGE_PORT=4001
+    restart: "no"
+  storageservice:
+    image: feliperomero/storageservice:latest
+    build:
+      context: ./storage-service
+      dockerfile: Dockerfile
+    container_name: storageservice
+    ports:
+      - "4001:4001"
+    environment:
+      - PORT=4001
+      - NODE_ENV=development
+      - DEBUG=storage-service:*
+      - STORAGE_CONTAINER_NAME=videos
+      - STORAGE_ENDPOINT=http://localhost:10000/devstoreaccount1
+      - STORAGE_ACCOUNT_NAME=devstoreaccount1
+      - STORAGE_ACCOUNT_KEY=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==
     restart: "no"

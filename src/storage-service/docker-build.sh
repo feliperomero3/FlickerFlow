@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the image name
-IMAGE_NAME="storageservice"
+IMAGE_NAME="feliperomero/storageservice"
 
 # Define the Dockerfile location
 DOCKERFILE_PATH="."

@@ -5,7 +5,7 @@ const appname = 'FlickerFlow'
 
 const environment = process.env.NODE_ENV || 'development'
 const port = process.env.PORT || 3000
-const videoStorageHost = process.env.VIDEO_STORAGE_HOST || 'http://localhost'
+const videoStorageHost = process.env.VIDEO_STORAGE_HOST || 'localhost'
 const videoStoragePort = parseInt((process.env.VIDEO_STORAGE_PORT || 3001).toString())
 
 debug('Environment is %o', environment)
@@ -16,12 +16,20 @@ debug('Booting %o...', appname)
 const app = express()
 
 app.get('/video', async (req, res) => {
+  const key = 'path'
+  const value = req.query.path
+  debug('req.query.path is %o', req.query.path)
+  if (!value) {
+    res.status(404).send('Not Found')
+    return
+  }
+  const path = `/video?${key}=${value}`
   const forwardOptions = {
     method: 'GET',
-    path: '/video?path=sample.mp4',
     headers: req.headers,
     host: videoStorageHost,
-    port: videoStoragePort
+    port: videoStoragePort,
+    path: path
   }
   debug('Forwarding options is %o', forwardOptions)
   const forwardRequest = http.request(forwardOptions, forwardResponse => {

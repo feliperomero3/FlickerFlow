@@ -24,6 +24,7 @@ module.exports = {
   rules: {
     'no-unused-vars': 'warn',
     'comma-dangle': 'warn',
-    'space-before-function-paren': 'off'
+    'space-before-function-paren': 'off',
+    'object-shorthand': 'off'
   }
 }
