@@ -42,7 +42,7 @@ app.get('/video', async (req, res) => {
 app.get('/', (req, res) => {
   const content = `
     <h1>Hello World!</h1>
-    <p>Welcome to ${appname}! Go to <a href="/video">Video</a></p>
+    <p>Welcome to ${appname}! Go to <a href="/video?path=sample.mp4">Video</a></p>
   `
   res.writeHead(200, {
     'Content-Type': 'text/html'
