@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the image name
-IMAGE_NAME="feliperomero/storageservice"
+IMAGE_NAME="feliperomero/flickerflow-storage"
 
 # Define the Dockerfile location
 DOCKERFILE_PATH="."

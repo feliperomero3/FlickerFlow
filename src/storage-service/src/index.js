@@ -1,8 +1,8 @@
 const express = require('express')
 const { BlobServiceClient, StorageSharedKeyCredential } = require('@azure/storage-blob')
 const debug = require('debug')('storage-service:server')
+const appname = 'storage-service'
 
-const appname = 'StorageService'
 const environment = process.env.NODE_ENV || 'development'
 const port = process.env.PORT || 3001
 const storageContainerName = process.env.STORAGE_CONTAINER_NAME || 'videos'

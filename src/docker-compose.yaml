@@ -11,15 +11,15 @@ services:
       - PORT=4000
       - NODE_ENV=development
       - DEBUG=video-service:*
-      - VIDEO_STORAGE_HOST=storageservice
+      - VIDEO_STORAGE_HOST=storage-service
       - VIDEO_STORAGE_PORT=4001
     restart: "no"
-  storageservice:
-    image: feliperomero/storageservice:latest
+  storage-service:
+    image: feliperomero/flickerflow-storage:latest
     build:
       context: ./storage-service
       dockerfile: Dockerfile
-    container_name: storageservice
+    container_name: storage-service
     ports:
       - "4001:4001"
     environment:
