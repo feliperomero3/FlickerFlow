@@ -5,7 +5,7 @@ Inspired by the book [Bootstrapping Microservices Second Edition][1] by Ashley D
 FlickerFlow is a simple video-streaming service that delivers video to a user watching in a web browser.
 
 Our application will contain services for video streaming, storage, and upload, plus a gateway for the customer-facing frontend.
-The users can view a list of videos. From there, they can select a video, and it will begin playing.
+The users can view a list of videos and select one to begin playing it.
 
 ## Prerequisites
 
@@ -16,20 +16,21 @@ The users can view a list of videos. From there, they can select a video, and it
 
 1. Clone the repository.
 1. Open a terminal in the root directory.
-1. Change to the `src/flicker-flow` directory.
+1. Change to the `src/video-service` directory.
 1. Run `npm install`.
 1. Run `npm start`.
-1. Open your web browser at the specified URL.
+1. Change to the `src/storage-service` directory.
+1. Run `npm install`.
+1. Run `npm start`.
+1. Open your web browser at <http://localhost:3000>.
 
-## Getting started using Docker
+## Getting started using Docker Compose
 
 1. Clone the repository.
 1. Open a terminal in the root directory.
-1. Change to the `src/flicker-flow` directory.
-1. Run `chmod +x docker-build.sh docker-run.sh`.
-1. Run `./docker-build.sh`.
-1. Run `./docker-run.sh`.
-1. Open your web browser at the specified URL.
+1. Change to the `src` directory.
+1. Run `docker compose up --build`.
+1. Open your web browser at <http://localhost:4000>.
 
 ## License
 
