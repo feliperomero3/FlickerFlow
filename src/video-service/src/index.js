@@ -1,7 +1,7 @@
 const express = require('express')
 const http = require('http')
-const debug = require('debug')('flicker-flow:server')
-const appname = 'FlickerFlow'
+const debug = require('debug')('video-service:server')
+const appname = 'video-service'
 
 const environment = process.env.NODE_ENV || 'development'
 const port = process.env.PORT || 3000

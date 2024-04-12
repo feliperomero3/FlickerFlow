@@ -1,5 +1,5 @@
 {
-  "name": "flicker-flow",
+  "name": "video-service",
   "version": "0.1.0-preview",
   "description": "FlickerFlow is a simple video-streaming service that delivers video to a user watching in a web browser.",
   "author": "Felipe Romero",

@@ -1,16 +1,16 @@
 services:
-  flickerflow:
-    image: feliperomero/flickerflow:latest
+  video-service:
+    image: feliperomero/flickerflow-video:latest
     build:
-      context: ./flicker-flow
+      context: ./video-service
       dockerfile: Dockerfile
-    container_name: flickerflow
+    container_name: video-service
     ports:
       - "4000:4000"
     environment:
       - PORT=4000
       - NODE_ENV=development
-      - DEBUG=flicker-flow:*
+      - DEBUG=video-service:*
       - VIDEO_STORAGE_HOST=storageservice
       - VIDEO_STORAGE_PORT=4001
     restart: "no"

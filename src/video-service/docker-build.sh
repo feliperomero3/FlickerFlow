@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the image name
-IMAGE_NAME="feliperomero/flickerflow"
+IMAGE_NAME="feliperomero/flickerflow-video"
 
 # Define the Dockerfile location
 DOCKERFILE_PATH="."
