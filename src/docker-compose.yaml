@@ -1,3 +1,4 @@
+name: flickerflow
 services:
   video-service:
     image: feliperomero/flickerflow-video:latest
