@@ -31,7 +31,10 @@ app.get('/video', async (req, res) => {
     port: videoStoragePort,
     path: path
   }
-  debug('Forwarding options is %o', forwardOptions)
+  debug('Forwarding options is %o', {
+    ...forwardOptions,
+    headers: '<<omitted>>'
+  })
   const forwardRequest = http.request(forwardOptions, forwardResponse => {
     res.writeHead(forwardResponse.statusCode || 200, forwardResponse.headers)
     forwardResponse.pipe(res)
