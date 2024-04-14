@@ -1,7 +1,9 @@
 const express = require('express')
+const fs = require('fs')
 const { BlobServiceClient, StorageSharedKeyCredential } = require('@azure/storage-blob')
 const debug = require('debug')('storage-service:server')
 const appname = 'storage-service'
+const seedVideo = 'sample.mp4'
 
 const environment = process.env.NODE_ENV || 'development'
 const port = process.env.PORT || 3001
@@ -31,6 +33,22 @@ function createBlobStorageService(storageEndpoint, storageAccountName, storageAc
   return blobService
 }
 
+/**
+ * Get the seed video data for the application.
+ * @param {string} seedVideoFileName The video file name (e. g. sample.mp4).
+ * @returns {Promise<fs.ReadStream>} The video stream.
+ */
+async function getSeedVideo(seedVideoFileName) {
+  const videoPath = `./assets/${seedVideoFileName}`
+  const exists = fs.existsSync(videoPath)
+  if (!exists) {
+    debug('Getting seed video from the file system %o', videoPath)
+    const videoStream = fs.createReadStream(videoPath)
+    return videoStream
+  }
+  throw new Error(`Seed video ${videoPath} not found`)
+}
+
 const app = express()
 
 app.get('/video', async (req, res) => {
@@ -43,9 +61,19 @@ app.get('/video', async (req, res) => {
   const blobService = createBlobStorageService(storageEndpoint, storageAccountName, storageAccessKey)
   const containerClient = blobService.getContainerClient(storageContainerName)
   const blobClient = containerClient.getBlobClient(path)
-
   const exists = await blobClient.exists()
+
   if (!exists) {
+    if (path === seedVideo) {
+      const videoStream = await getSeedVideo(seedVideo)
+      const videoSize = fs.statSync(videoStream.path).size
+      res.writeHead(200, {
+        'Content-Length': videoSize,
+        'Content-Type': 'video/mp4'
+      })
+      videoStream.pipe(res)
+      return
+    }
     res.status(404).send('Blob not found')
     return
   }
@@ -64,7 +92,7 @@ app.get('/video', async (req, res) => {
 })
 
 app.get('/', (req, res) => {
-  const path = 'sample.mp4'
+  const path = seedVideo
   const content = `
     <h1>Hello Video!</h1>
     <p>Welcome to ${appname}! Go to <a href="/video?path=${path}">Video</a></p>
