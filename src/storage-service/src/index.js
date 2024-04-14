@@ -1,5 +1,6 @@
 const express = require('express')
 const fs = require('fs')
+const path = require('path')
 const { BlobServiceClient, StorageSharedKeyCredential } = require('@azure/storage-blob')
 const debug = require('debug')('storage-service:server')
 const appname = 'storage-service'
@@ -39,9 +40,9 @@ function createBlobStorageService(storageEndpoint, storageAccountName, storageAc
  * @returns {Promise<fs.ReadStream>} The video stream.
  */
 async function getSeedVideo(seedVideoFileName) {
-  const videoPath = `../assets/${seedVideoFileName}`
+  const videoPath = path.join(__dirname, '../assets', seedVideoFileName)
   const exists = fs.existsSync(videoPath)
-  if (!exists) {
+  if (exists) {
     debug('Getting seed video from the file system %o', videoPath)
     const videoStream = fs.createReadStream(videoPath)
     return videoStream
