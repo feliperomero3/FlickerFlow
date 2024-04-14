@@ -20,9 +20,12 @@ debug('Booting %o...', appname)
 
 /**
  * Create the Blob service API client to communicate with Azure storage.
+ * @param {string} storageEndpoint The Azure storage endpoint.
+ * @param {string} storageAccountName The Azure storage account name.
+ * @param {string} storageAccessKey The Azure storage access key.
  * @returns {BlobServiceClient} The Blob service API.
  */
-function createBlobService() {
+function createBlobStorageService(storageEndpoint, storageAccountName, storageAccessKey) {
   const sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccessKey)
   const blobService = new BlobServiceClient(storageEndpoint, sharedKeyCredential)
   return blobService
@@ -37,7 +40,7 @@ app.get('/video', async (req, res) => {
   debug('Requesting video %o', req.query.path)
 
   const path = req.query.path.toString()
-  const blobService = createBlobService()
+  const blobService = createBlobStorageService(storageEndpoint, storageAccountName, storageAccessKey)
   const containerClient = blobService.getContainerClient(storageContainerName)
   const blobClient = containerClient.getBlobClient(path)
 
