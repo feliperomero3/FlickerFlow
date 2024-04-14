@@ -5,7 +5,6 @@ services:
     build:
       context: ./video-service
       dockerfile: Dockerfile
-    container_name: video-service
     ports:
       - "4000:4000"
     environment:
@@ -20,7 +19,6 @@ services:
     build:
       context: ./storage-service
       dockerfile: Dockerfile
-    container_name: storage-service
     ports:
       - "4001:4001"
     environment:
@@ -28,14 +26,13 @@ services:
       - NODE_ENV=development
       - DEBUG=storage-service:*
       - STORAGE_CONTAINER_NAME=videos
-      - STORAGE_HOST=azuriteV3C
+      - STORAGE_HOST=azurite
       - STORAGE_PORT=10000
       - STORAGE_ACCOUNT_NAME=devstoreaccount1
       - STORAGE_ACCOUNT_KEY=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==
     restart: "no"
   azurite:
     image: mcr.microsoft.com/azure-storage/azurite
-    container_name: "azuriteV3C"
     ports:
       - "10000:10000"
       - "10001:10001"
