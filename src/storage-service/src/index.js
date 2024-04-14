@@ -39,7 +39,7 @@ function createBlobStorageService(storageEndpoint, storageAccountName, storageAc
  * @returns {Promise<fs.ReadStream>} The video stream.
  */
 async function getSeedVideo(seedVideoFileName) {
-  const videoPath = `./assets/${seedVideoFileName}`
+  const videoPath = `../assets/${seedVideoFileName}`
   const exists = fs.existsSync(videoPath)
   if (!exists) {
     debug('Getting seed video from the file system %o', videoPath)
